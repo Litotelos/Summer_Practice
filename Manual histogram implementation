@@ -1,0 +1,175 @@
+#include <string>
+#include <iostream>
+#include  <vector>
+#include <algorithm>
+int Weight = 0 ;
+int Counter = 0;
+int Group_One = 0;
+int Group_Two = 0;
+int Group_Three = 0 ;
+int Group_Four = 0;
+int Group_Five = 0;
+int Max_Value_One= 0;
+int Max_Value_Two = 0;
+int Max_Value_Three = 0;
+int Max_Value_Four = 0;
+int Max_Value_Five= 0;
+int Absolute_Max_Value=0;
+
+std::vector<int> Vector_One;
+std::vector<int> Vector_Two;
+std::vector<int> Vector_Three;
+std::vector<int> Vector_Four;
+std::vector<int> Vector_Five;
+
+
+void Group_Weight(int Weight) {
+    if (Weight <= 0) {
+        std::cout << "Invalid weight" <<'\n';
+    }
+    else if (Weight >= 1 && Weight <= 49) {
+        Group_One++;
+        Counter++;
+        Vector_One.push_back(Weight);
+    }
+    else if (Weight >= 50 && Weight <=69) {
+        Group_Two++;
+        Counter++;
+        Vector_Two.push_back(Weight);
+    }
+    else if (Weight >= 70 && Weight <=89) {
+        Group_Three++;
+        Counter++;
+        Vector_Three.push_back(Weight);
+    }
+    else if (Weight >= 90 && Weight <=109) {
+        Group_Four++;
+        Counter++;
+        Vector_Four.push_back(Weight);
+    }
+    else if (Weight >= 110 && Weight <=149) {
+        Group_Five++;
+        Counter++;
+        Vector_Five.push_back(Weight);
+    }
+}
+
+void Max_Value() {
+    if (!Vector_One.empty()) {
+        Max_Value_One = *std::max_element(Vector_One.begin(), Vector_One.end());
+    }
+    if (!Vector_Two.empty()) {
+        Max_Value_Two = *std::max_element(Vector_Two.begin(), Vector_Two.end());
+    }
+    if (!Vector_Three.empty()) {
+        Max_Value_Three = *std::max_element(Vector_Three.begin(), Vector_Three.end());;
+    }
+    if (!Vector_Four.empty()) {
+        Max_Value_Four = *std::max_element(Vector_Four.begin(), Vector_Four.end());
+    }
+    if (!Vector_Five.empty()) {
+        Max_Value_Five = *std::max_element(Vector_Five.begin(), Vector_Five.end());
+    }
+}
+
+auto Create_Histogram(int Absolute_Max_Value) {
+
+    for (int i = 5; i > 0; i--) {
+        std::cout.width(2);
+        std::cout << i << "| ";
+
+        if (i == 5) {
+            for (int j = 0 ; j < Vector_Five.size() ; j++) {
+                if (Vector_Five[j] >= i ) {
+                    std::cout << "$ " ;
+                }
+                else {
+                    std::cout << " ";
+                }
+            }
+            std::cout << '\n';
+        }
+        if (i == 4) {
+            for (int n = 0 ; n < Vector_Four.size() ; n++) {
+                if (Vector_Four[n] >= i ) {
+                    std::cout << "$ " ;
+                }
+                else {
+                    std::cout << " ";
+                }
+            }
+            std::cout << '\n';
+        }
+        if (i == 3) {
+            for (int m = 0 ; m < Vector_Three.size() ; m++) {
+                if (Vector_Four[m] >= i ) {
+                    std::cout << "$ " ;
+                }
+                else {
+                    std::cout << " ";
+                }
+            }
+            std::cout << '\n';
+        }
+        if (i == 2) {
+            for (int k = 0 ; k < Vector_Two.size(); k++) {
+                if (Vector_Four[k] >= i ) {
+                    std::cout << "$ " ;
+                }
+                else {
+                    std::cout << " ";
+                }
+            }
+            std::cout << '\n';
+        }
+        if (i == 1) {
+            for (int o = 0 ; o < Vector_One.size(); o++) {
+                if (o >= i ) {
+                    std::cout << "$ " ;
+                }
+                else {
+                    std::cout << " ";
+                }
+            }
+            std::cout << '\n';
+        }
+    }
+}
+void Stats() {
+    std::cout << "Todays Stats are as follows:" << '\n';
+    std::cout << "Total customers:" << Counter << '\n';
+    std::cout << "Total Group 1 Customers:" << Group_One << '\n';
+    std::cout << "Total Group 2 Customers:" << Group_Two << '\n';
+    std::cout << "Total Group 3 Customers:" << Group_Three << '\n';
+    std::cout << "Total Group 4 Customers:" << Group_Four << '\n';
+    std::cout << "Total Group 5 Customers:" << Group_Five << '\n';
+    int pop = std::max({Group_One,Group_Two,Group_Three,Group_Four,Group_Five});
+    int upop = std::min({Group_One,Group_Two,Group_Three,Group_Four,Group_Five});
+    std::cout << "Most popular Group had: " << pop << "Number of Entries" << '\n';
+    std::cout << "Least popular Group had: " << upop << "Number of entries" << '\n';
+    int mean = Counter / 5;
+    std::cout << "The mean number of enteries was: " << mean << '\n';
+
+}
+
+
+
+auto main() -> int {
+        std::cout << ">> Flexi fit Body weight tracker << " << '\n';
+        std::cout << "Please enter a body weight:";
+        std::cin >> Weight;
+        Group_Weight(Weight);
+        do {
+            std::cout << "Please enter another weight enter:";
+            std::cin >> Weight;
+            Group_Weight(Weight);
+        }
+        while (Weight < 150);
+
+    Max_Value();
+    Absolute_Max_Value = Counter;
+    Create_Histogram(Absolute_Max_Value);
+    Stats();
+    std::cout<< "Program End" << '\n';
+    
+}
